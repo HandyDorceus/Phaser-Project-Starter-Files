@@ -13,7 +13,6 @@ Before we get started we should understand how our project is organized and what
 In the root folder of our project we should see two folders and some files.
 
 - `src` is the folder containing all of our code. Everything we do will be done to files inside of here.
-- `tutorial` contains the text files for the tutorial you will follow.
 - `package.json` and `package-lock.json` are files that you will find in most Javascript projects. They contain a list of libraries that our project uses. If you look inside `package.json` you should see a line with the word "phaser". Next to it is the version of the Phaser library we are working with. You can pretty much ignore the `package-lock.json` file. It gets automatically generated for us and is used behind the scenes.
 - `.gitattributes` and `.gitignore` are two files used by Git. `.gitignore` contains a list of files and folders we do not want Git to know about. For example, our operating system sometimes adds files to folder. These files are not important for our project.
 - `.eslintrc.js` is a file that sets up some code formatting rules. For example, in Javascript you can use any number of spaces you want for indentation. In order to stay consistent we will put our preference in this file and VS Code will automatically format our code using these.
@@ -41,7 +40,3 @@ If everything worked as intended we should see a game load in our browser like s
 ## A Few More Notes
 
 This project is set up to use a library called [Parcel](https://parceljs.org/). If you would like to know what Parcel does you can [watch this video](https://www.youtube.com/watch?v=5IG4UmULyoA). Just be aware this is a semi-complicated topic and you do not need to understand how Parcel works for this project.
-
-## Coding Our Own Game
-
-Move on to the [first step of our tutorial here](tutorial/step1.md)!
