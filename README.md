@@ -35,7 +35,7 @@ You should see a message saying `Server running at http://localhost:1234`. If so
 
 If everything worked as intended we should see a game load in our browser like so:
 
-![Running the Game](tutorial/images/running-the-game.png)
+![Running the Game](src/assets/menu-scene.png)
 
 ## A Few More Notes
 
