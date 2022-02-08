@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Prevent File not found (404) for favicon.ico -->
+    <link rel="icon" href="data:;base64,=">
+
+    <meta charset="UTF-8" />
+    <title>AFH Invaders</title>
+    <style type="text/css">
+        @font-face {
+            font-family: 'Space Mono';
+            src: url('./assets/fonts/space-mono-v6-latin-regular.woff2') format('woff2');
+        }
+
+        html {
+            height: 100%;
+            background-color: black;
+            color: white;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        canvas {
+            border: 1px solid red;
+        }
+
+        h1 {
+            font-family: 'Space Mono', cursive;
+        }
+    </style>
+</head>
+
+<body>
+    <script type="module" src="scripts/final.js"></script>
+</body>
+
+</html>
