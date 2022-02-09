@@ -15,7 +15,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create() {
-    this.add.image(this.game.config.width / 2, this.game.config.height / 2, 'menu-scene-text');
+    this.add.image((this.game.config.width / 2) - 40, this.game.config.height / 2, 'menu-scene-text');
 
     WebFont.load({
       custom: {
@@ -26,7 +26,7 @@ export default class GameScene extends Phaser.Scene {
           .text(
             this.game.config.width / 2,
             this.game.config.height * (2 / 3),
-            'You can change me in MenuScene.js',
+            'Press Space To Start',
             {
               fontFamily: 'Space Mono',
               fontSize: '32px',
