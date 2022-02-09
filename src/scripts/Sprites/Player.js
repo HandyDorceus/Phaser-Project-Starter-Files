@@ -14,8 +14,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   update() {
+    console.log(this.player, "sdfsdfsdfsdf")
+
     if (this.cursors.left.isDown) {
       this.x -= 10;
+    console.log(this.player)
+      // this.setX(-10)
     }
     if (this.cursors.right.isDown) {
       this.x += 10;
