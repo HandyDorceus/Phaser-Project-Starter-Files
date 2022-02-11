@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
-    super(scene, x, y,);
+    super(scene, x, y);
 
     scene.add.existing(this);
     scene.physics.world.enableBody(this);
@@ -19,21 +19,15 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     // Initialize Snake
     this.headPosition = new Phaser.Geom.Point(x, y);
-
     this.body = scene.add.group();
-
-
-    this.head = this.body.create(x * 16, y * 16, 'snake-body');
+    this.head = this.body.create(x * 20, y * 20, 'snake-body');
     this.head.setOrigin(0);
-
     this.alive = true;
-
-    this.speed = 10;
-
+    this.speed = 100;
     this.moveTime = 0;
-
     this.heading = this.right;
     this.direction = this.right;
+    this.length = 1;
 
 
 
@@ -65,7 +59,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     if (this.cursors.left.isDown) {
       // this.x -= 10;
     // console.log(this.player)
-    this.faceLeft();
+      this.faceLeft();
     }
     else if (this.cursors.right.isDown) {
       // this.x += 10;
@@ -97,33 +91,27 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     */
     switch (this.heading){
       case this.left:
-        console.log(this.headPosition)
-          this.headPosition.x = Phaser.Math.Wrap(this.headPosition.x - 1, 0, 960);
+          this.headPosition.x = Phaser.Math.Wrap(this.headPosition.x - 1, 0, 64);
           break;
 
       case this.right:
-          this.headPosition.x = Phaser.Math.Wrap(this.headPosition.x + 1, 0, 960);
+          this.headPosition.x = Phaser.Math.Wrap(this.headPosition.x + 1, 0, 64);
           break;
 
       case this.up:
-          this.headPosition.y = Phaser.Math.Wrap(this.headPosition.y - 1, 0, 720);
+          this.headPosition.y = Phaser.Math.Wrap(this.headPosition.y - 1, 0, 36);
           break;
 
       case this.down:
-          this.headPosition.y = Phaser.Math.Wrap(this.headPosition.y + 1, 0, 720);
+          this.headPosition.y = Phaser.Math.Wrap(this.headPosition.y + 1, 0, 36);
           break;
     }
-    // console.log('REACHME 07')
-    // console.log(this.direction);
-
 
     this.direction = this.heading;
-
     //  Update the body segments
-    Phaser.Actions.ShiftPosition(this.body.getChildren(), this.headPosition.x , this.headPosition.y , 1);
+    Phaser.Actions.ShiftPosition(this.body.getChildren(), this.headPosition.x * 20, this.headPosition.y * 20, 1);
 
     //  Update the timer ready for the next movement
-    console.log(time);
     this.moveTime = time + this.speed;
 
 
@@ -133,28 +121,24 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
   faceLeft(){
     if (this.direction === this.up || this.direction === this.down){
-    console.log('REACHME 03')
       this.heading = this.left;
     }
   }
 
   faceRight(){
     if (this.direction === this.up || this.direction === this.down){
-    console.log('REACHME 04')
       this.heading = this.right;
     }
   }
 
   faceUp(){
     if (this.direction === this.left || this.direction === this.right){
-    console.log('REACHME 05')
       this.heading = this.up;
     }
   }
 
   faceDown(){
     if (this.direction === this.left || this.direction === this.right){
-    console.log('REACHME 06')
       this.heading = this.down;
     }
   }
