@@ -14,4 +14,8 @@ const directions = {
   right: 3,
 };
 
-export { colors, directions };
+const dimensions = {
+  unit: 20,
+};
+
+export { colors, directions, dimensions };

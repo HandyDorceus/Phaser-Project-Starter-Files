@@ -1,10 +1,10 @@
 import Phaser from 'phaser';
 import { directions } from '../constants';
+import { getDimensionValue, getPixelValue } from '../helpers';
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
-    super(scene, x, y);
-
+    super(scene, getPixelValue(x), getPixelValue(y));
     scene.add.existing(this);
     scene.physics.world.enableBody(this);
 
@@ -13,7 +13,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     // Initialize Snake
     this.headPosition = new Phaser.Geom.Point(x, y);
     this.body = scene.add.group();
-    this.head = this.body.create(x * 20, y * 20, 'snake-body');
+    this.head = this.body.create(getPixelValue(x), getPixelValue(y), 'snake-body');
     this.head.setOrigin(0);
     this.alive = true;
     this.updateInterval = 100;
@@ -62,19 +62,35 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
      */
     switch (this.heading) {
       case directions.left:
-        this.headPosition.x = Phaser.Math.Wrap(this.headPosition.x - 1, 0, 64);
+        this.headPosition.x = Phaser.Math.Wrap(
+          this.headPosition.x - 1,
+          0,
+          getDimensionValue(this.scene.game.config.width)
+        );
         break;
 
       case directions.right:
-        this.headPosition.x = Phaser.Math.Wrap(this.headPosition.x + 1, 0, 64);
+        this.headPosition.x = Phaser.Math.Wrap(
+          this.headPosition.x + 1,
+          0,
+          getDimensionValue(this.scene.game.config.width)
+        );
         break;
 
       case directions.up:
-        this.headPosition.y = Phaser.Math.Wrap(this.headPosition.y - 1, 0, 36);
+        this.headPosition.y = Phaser.Math.Wrap(
+          this.headPosition.y - 1,
+          0,
+          getDimensionValue(this.scene.game.config.height)
+        );
         break;
 
       case directions.down:
-        this.headPosition.y = Phaser.Math.Wrap(this.headPosition.y + 1, 0, 36);
+        this.headPosition.y = Phaser.Math.Wrap(
+          this.headPosition.y + 1,
+          0,
+          getDimensionValue(this.scene.game.config.height)
+        );
         break;
     }
 
@@ -82,15 +98,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     //  Update the body segments
     Phaser.Actions.ShiftPosition(
       this.body.getChildren(),
-      this.headPosition.x * 20,
-      this.headPosition.y * 20,
+      getPixelValue(this.headPosition.x),
+      getPixelValue(this.headPosition.y),
       1
     );
 
     //  Update the timer ready for the next movement
     this.moveTime = time + this.updateInterval;
-
-    return true;
   }
 
   faceLeft() {

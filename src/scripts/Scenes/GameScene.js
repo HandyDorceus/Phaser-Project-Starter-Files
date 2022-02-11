@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import Player from '../Sprites/Player';
-// import Coin from '../Sprites/Coin';
-import { colors } from '../constants';
+import Coin from '../Sprites/Coin';
+import { getDimensionValue } from '../helpers';
 
 export default class GameScene extends Phaser.Scene {
   player;
@@ -28,12 +28,20 @@ export default class GameScene extends Phaser.Scene {
       this.game.config.height / 2,
       'background'
     );
-    this.player = new Player(this, this.game.config.width / 2, this.game.config.height / 2);
-    // this.coin = new Coin(this, this.game.config.width / 2, this.game.config.height / 2);
+    this.player = new Player(
+      this,
+      getDimensionValue(this.game.config.width / 2),
+      getDimensionValue(this.game.config.height / 2)
+    );
+    this.coin = new Coin(
+      this,
+      getDimensionValue(this.game.config.width / 2),
+      getDimensionValue(this.game.config.height / 2)
+    );
   }
 
   update(time) {
     this.player.update(time);
-    // this.coin.update();
+    this.coin.update();
   }
 }
