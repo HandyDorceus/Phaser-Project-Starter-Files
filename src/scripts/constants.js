@@ -7,4 +7,11 @@ const colors = {
   teagreen: 'CFFFB3',
 };
 
-export { colors };
+const directions = {
+  up: 0,
+  down: 1,
+  left: 2,
+  right: 3,
+};
+
+export { colors, directions };
