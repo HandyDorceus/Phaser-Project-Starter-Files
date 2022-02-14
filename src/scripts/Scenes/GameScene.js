@@ -33,15 +33,21 @@ export default class GameScene extends Phaser.Scene {
       getDimensionValue(this.game.config.width / 2),
       getDimensionValue(this.game.config.height / 2)
     );
-    this.coin = new Coin(
-      this,
-      getDimensionValue(this.game.config.width / 2),
-      getDimensionValue(this.game.config.height / 2)
-    );
+    // this.coin = new Coin(
+    //   this,
+    //   getDimensionValue(this.game.config.width / 2),
+    //   getDimensionValue(this.game.config.height / 2)
+    // );
+
+    // this.physics.add.overlap(this.player, this.coin, this.snakeOverlapCoin);
   }
 
   update(time) {
-    this.player.update(time);
-    this.coin.update();
+    // this.player.update(time);
+    // this.coin.update();
+  }
+
+  snakeOverlapCoin(snake, coin) {
+    console.log(snake, coin);
   }
 }
