@@ -4,19 +4,23 @@ import { getDimensionValue, getPixelValue } from '../helpers';
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
-    super(scene, getPixelValue(x), getPixelValue(y), 'snake-body');
-    scene.add.existing(this);
-    scene.physics.world.enableBody(this);
+    super(scene, getPixelValue(x) , getPixelValue(y), 'snake-body');
+    // scene.add.existing(this);
+    // scene.physics.world.enableBody(this);
+    // scene.physics.world.enable(this);
+
+    // console.log(this);
 
     this.setOrigin(0);
 
     this.cursors = scene.input.keyboard.createCursorKeys();
 
-    // // Initialize Snake
-    this.headPosition = new Phaser.Geom.Point(x, y);
-    this.snake = this.body.add.group();
-    this.head = this.snake.create(getPixelValue(x), getPixelValue(y), 'snake-body');
-
+    // Initialize Snake
+    this.headPosition = new Phaser.Geom.Point(x + .5, y + .5);
+    this.snake = scene.physics.add.group();
+    this.head = this.snake.create( getPixelValue(x + .5) ,  getPixelValue(y + .5) , 'snake-body');
+    // console.log(this.head)
+    // console.log(this.snake);
     this.alive = true;
     this.updateInterval = 100;
     this.moveTime = 0;
