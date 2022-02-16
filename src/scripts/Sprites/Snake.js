@@ -1,26 +1,26 @@
 import Phaser from 'phaser';
-import { directions } from '../constants';
-import { getDimensionValue, getPixelValue } from '../helpers';
+import {
+  directions
+} from '../constants';
+import {
+  getDimensionValue,
+  getPixelValue
+} from '../helpers';
 
-export default class Player extends Phaser.Physics.Arcade.Sprite {
+export default class Snake extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
-    super(scene, getPixelValue(x) , getPixelValue(y), 'snake-body');
+    super(scene, getPixelValue(x), getPixelValue(y), 'snake-body');
     // this.setCollideWorldBounds(true);
     // scene.add.existing(this);
     // scene.physics.world.enable(this);
-    console.log(this);
-
-    this.setOrigin(0);
+    // this.setOrigin(0);
 
     this.cursors = scene.input.keyboard.createCursorKeys();
 
     // Initialize Snake
-    this.headPosition = new Phaser.Geom.Point(x - 10.5, y - 10.5);
     this.snake = scene.physics.add.group();
-    this.head = this.snake.create( getPixelValue(x + .5) ,  getPixelValue(y + .5) , 'snake-body');
- 
-    // console.log(this.head)
-    // console.log(this.snake);
+    this.head = this.snake.create(getPixelValue(x), getPixelValue(y), 'snake-body');
+
     this.alive = true;
     this.updateInterval = 100;
     this.moveTime = 0;
@@ -31,7 +31,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   update(time) {
-    console.log(this.x, this.y, this.width, this.height);
     if (!this.alive) {
       return;
     }
@@ -59,7 +58,51 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
-  move(time) { 
+  // This returns an x and y in game units not pixels
+  getNextPosition() {
+    if (this.heading === directions.left) {
+      return {
+        x: Phaser.Math.Wrap(
+          getDimensionValue(this.getHead().x) - 1,
+          0,
+          getDimensionValue(this.scene.game.config.width)
+        ),
+        y: getDimensionValue(this.getHead().y)
+      };
+    }
+    if (this.heading === directions.right) {
+      return {
+        x: Phaser.Math.Wrap(
+          getDimensionValue(this.getHead().x) + 1,
+          0,
+          getDimensionValue(this.scene.game.config.width)
+        ),
+        y: getDimensionValue(this.getHead().y)
+      };
+    }
+    if (this.heading === directions.up) {
+      return {
+        x: getDimensionValue(this.getHead().x),
+        y: Phaser.Math.Wrap(
+          getDimensionValue(this.getHead().y) - 1,
+          0,
+          getDimensionValue(this.scene.game.config.height)
+        ),
+      };
+    }
+    if (this.heading === directions.down) {
+      return {
+        x: getDimensionValue(this.getHead().x),
+        y: Phaser.Math.Wrap(
+          getDimensionValue(this.getHead().y) + 1,
+          0,
+          getDimensionValue(this.scene.game.config.height)
+        ),
+      };
+    }
+  }
+
+  move(time) {
     /**
      * Based on the heading property (which is the direction the pgroup pressed)
      * we update the headPosition value accordingly.
@@ -67,46 +110,14 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
      * The Math.wrap call allow the snake to wrap around the screen, so when
      * it goes off any of the sides it re-appears on the other.
      */
-    switch (this.heading) {
-      case directions.left:
-        this.headPosition.x = Phaser.Math.Wrap(
-          this.headPosition.x - 1,
-          0,
-          getDimensionValue(this.scene.game.config.width)
-        );
-        break;
-
-      case directions.right:
-        this.headPosition.x = Phaser.Math.Wrap(
-          this.headPosition.x + 1,
-          0,
-          getDimensionValue(this.scene.game.config.width)
-        );
-        break;
-
-      case directions.up:
-        this.headPosition.y = Phaser.Math.Wrap(
-          this.headPosition.y - 1,
-          0,
-          getDimensionValue(this.scene.game.config.height)
-        );
-        break;
-
-      case directions.down:
-        this.headPosition.y = Phaser.Math.Wrap(
-          this.headPosition.y + 1,
-          0,
-          getDimensionValue(this.scene.game.config.height)
-        );
-        break;
-    }
+    const nextPosition = this.getNextPosition();
 
     this.direction = this.heading;
     //  Update the snake segments
     Phaser.Actions.ShiftPosition(
       this.snake.getChildren(),
-      getPixelValue(this.headPosition.x),
-      getPixelValue(this.headPosition.y),
+      getPixelValue(nextPosition.x- 0.5),
+      getPixelValue(nextPosition.y - 0.5),
       1
     );
 
@@ -136,5 +147,19 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     if (this.direction === directions.left || this.direction === directions.right) {
       this.heading = directions.down;
     }
+  }
+
+  getTail() {
+    const children = this.snake.getChildren()
+    return children[children.length - 1];
+  }
+
+  getHead() {
+    return this.snake.getChildren()[0];
+  }
+
+  grow() {
+    const tail = this.getTail();
+    this.snake.create(tail.x, tail.y, 'snake-body');
   }
 }
