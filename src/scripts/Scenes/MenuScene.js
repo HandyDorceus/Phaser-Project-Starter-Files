@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import WebFont from 'webfontloader';
 import { colors } from '../constants';
 
-export default class GameScene extends Phaser.Scene {
+export default class MenuScene extends Phaser.Scene {
   constructor() {
     super({ key: 'MenuScene' });
   }

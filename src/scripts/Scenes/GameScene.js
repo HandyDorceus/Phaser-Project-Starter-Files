@@ -38,7 +38,7 @@ export default class GameScene extends Phaser.Scene {
       getDimensionValue(this.game.config.width / 2),
       getDimensionValue(this.game.config.height / 2)
     );
-    this.physics.add.overlap(this.player, this.coin, this.coin.snakeOverlapCoin(this.player, this.coin));
+    this.physics.add.overlap(this.player.head, this.coin, this.snakeOverlapCoin);
 
   }
 
@@ -48,10 +48,13 @@ export default class GameScene extends Phaser.Scene {
 
   }
 
-  // snakeOverlapCoin(snake, coin) {
-  //   console.log('REACHME 00');
+  snakeOverlapCoin(snake, coin) {
+    // console.log('REACHME 01');
+    console.log(snake)
+    // reposition the coin
+    // increase snake length by 1
 
-  //   // coin.x = this.Phaser.Math.Betweeen(0, 64);
-  //   // coin.y = Phaser.Math.Between(0, 32);
-  // }
+    // coin.x = this.Phaser.Math.Betweeen(0, 64);
+    // coin.y = Phaser.Math.Between(0, 32);
+  }
 }

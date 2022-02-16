@@ -5,20 +5,20 @@ import { getDimensionValue, getPixelValue } from '../helpers';
 export default class Player extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
     super(scene, getPixelValue(x) , getPixelValue(y), 'snake-body');
+    // this.setCollideWorldBounds(true);
     // scene.add.existing(this);
-    // scene.physics.world.enableBody(this);
     // scene.physics.world.enable(this);
-
-    // console.log(this);
+    console.log(this);
 
     this.setOrigin(0);
 
     this.cursors = scene.input.keyboard.createCursorKeys();
 
     // Initialize Snake
-    this.headPosition = new Phaser.Geom.Point(x + .5, y + .5);
+    this.headPosition = new Phaser.Geom.Point(x - 10.5, y - 10.5);
     this.snake = scene.physics.add.group();
     this.head = this.snake.create( getPixelValue(x + .5) ,  getPixelValue(y + .5) , 'snake-body');
+ 
     // console.log(this.head)
     // console.log(this.snake);
     this.alive = true;
@@ -31,6 +31,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   update(time) {
+    console.log(this.x, this.y, this.width, this.height);
     if (!this.alive) {
       return;
     }
@@ -58,7 +59,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
-  move(time) {
+  move(time) { 
     /**
      * Based on the heading property (which is the direction the pgroup pressed)
      * we update the headPosition value accordingly.
